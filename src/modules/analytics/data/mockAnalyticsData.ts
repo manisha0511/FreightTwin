@@ -1,0 +1,225 @@
+import {
+  MonthlyVolumeRecord,
+  CostBreakdownRecord,
+  RouteCorridorAnalytics,
+  DelayRootCauseRecord,
+  SustainabilityMetrics,
+  ReportItem,
+} from '../types/analytics.types';
+
+export const MOCK_ANALYTICS_DISCLAIMER =
+  'Simulated Logistics Intelligence: All shipment metrics, cost aggregations, transit statistics, and carbon emissions represent heuristic sample models. No live enterprise ERP, telemetry pipelines, or certified carbon registries are queried.';
+
+export const MOCK_MONTHLY_VOLUMES: MonthlyVolumeRecord[] = [
+  { month: 'Jan', volume: 11200, onTimeDeliveries: 10528, delayedDeliveries: 672, roadVolume: 6200, railVolume: 3800, airVolume: 700, waterVolume: 500 },
+  { month: 'Feb', volume: 10850, onTimeDeliveries: 10090, delayedDeliveries: 760, roadVolume: 5900, railVolume: 3750, airVolume: 680, waterVolume: 520 },
+  { month: 'Mar', volume: 12400, onTimeDeliveries: 11656, delayedDeliveries: 744, roadVolume: 6700, railVolume: 4300, airVolume: 820, waterVolume: 580 },
+  { month: 'Apr', volume: 13100, onTimeDeliveries: 12314, delayedDeliveries: 786, roadVolume: 7100, railVolume: 4600, airVolume: 810, waterVolume: 590 },
+  { month: 'May', volume: 14250, onTimeDeliveries: 13537, delayedDeliveries: 713, roadVolume: 7650, railVolume: 5100, airVolume: 890, waterVolume: 610 },
+  { month: 'Jun', volume: 14900, onTimeDeliveries: 14155, delayedDeliveries: 745, roadVolume: 7950, railVolume: 5350, airVolume: 950, waterVolume: 650 },
+  { month: 'Jul', volume: 14600, onTimeDeliveries: 13724, delayedDeliveries: 876, roadVolume: 7800, railVolume: 5200, airVolume: 920, waterVolume: 680 },
+  { month: 'Aug', volume: 15300, onTimeDeliveries: 14535, delayedDeliveries: 765, roadVolume: 8150, railVolume: 5500, airVolume: 970, waterVolume: 680 },
+  { month: 'Sep', volume: 16100, onTimeDeliveries: 15134, delayedDeliveries: 966, roadVolume: 8550, railVolume: 5850, airVolume: 1020, waterVolume: 680 },
+  { month: 'Oct', volume: 17200, onTimeDeliveries: 16168, delayedDeliveries: 1032, roadVolume: 9200, railVolume: 6200, airVolume: 1100, waterVolume: 700 },
+  { month: 'Nov', volume: 18450, onTimeDeliveries: 17158, delayedDeliveries: 1292, roadVolume: 9950, railVolume: 6600, airVolume: 1180, waterVolume: 720 },
+  { month: 'Dec', volume: 19800, onTimeDeliveries: 18414, delayedDeliveries: 1386, roadVolume: 10700, railVolume: 7100, airVolume: 1250, waterVolume: 750 },
+];
+
+export const MOCK_MONTHLY_COSTS: CostBreakdownRecord[] = [
+  { period: 'Jan', totalCostUsd: 1420000, fuelOrEnergyCostUsd: 468600, carrierLinehaulCostUsd: 681600, tollsAndAccessCostUsd: 198800, delaySurchargesUsd: 71000 },
+  { period: 'Feb', totalCostUsd: 1380000, fuelOrEnergyCostUsd: 455400, carrierLinehaulCostUsd: 662400, tollsAndAccessCostUsd: 193200, delaySurchargesUsd: 69000 },
+  { period: 'Mar', totalCostUsd: 1560000, fuelOrEnergyCostUsd: 514800, carrierLinehaulCostUsd: 748800, tollsAndAccessCostUsd: 218400, delaySurchargesUsd: 78000 },
+  { period: 'Apr', totalCostUsd: 1640000, fuelOrEnergyCostUsd: 541200, carrierLinehaulCostUsd: 787200, tollsAndAccessCostUsd: 229600, delaySurchargesUsd: 82000 },
+  { period: 'May', totalCostUsd: 1780000, fuelOrEnergyCostUsd: 587400, carrierLinehaulCostUsd: 854400, tollsAndAccessCostUsd: 249200, delaySurchargesUsd: 89000 },
+  { period: 'Jun', totalCostUsd: 1860000, fuelOrEnergyCostUsd: 613800, carrierLinehaulCostUsd: 892800, tollsAndAccessCostUsd: 260400, delaySurchargesUsd: 93000 },
+  { period: 'Jul', totalCostUsd: 1820000, fuelOrEnergyCostUsd: 600600, carrierLinehaulCostUsd: 873600, tollsAndAccessCostUsd: 254800, delaySurchargesUsd: 91000 },
+  { period: 'Aug', totalCostUsd: 1920000, fuelOrEnergyCostUsd: 633600, carrierLinehaulCostUsd: 921600, tollsAndAccessCostUsd: 268800, delaySurchargesUsd: 96000 },
+  { period: 'Sep', totalCostUsd: 2040000, fuelOrEnergyCostUsd: 673200, carrierLinehaulCostUsd: 979200, tollsAndAccessCostUsd: 285600, delaySurchargesUsd: 102000 },
+  { period: 'Oct', totalCostUsd: 2180000, fuelOrEnergyCostUsd: 719400, carrierLinehaulCostUsd: 1046400, tollsAndAccessCostUsd: 305200, delaySurchargesUsd: 109000 },
+  { period: 'Nov', totalCostUsd: 2360000, fuelOrEnergyCostUsd: 778800, carrierLinehaulCostUsd: 1132800, tollsAndAccessCostUsd: 330400, delaySurchargesUsd: 118000 },
+  { period: 'Dec', totalCostUsd: 2550000, fuelOrEnergyCostUsd: 841500, carrierLinehaulCostUsd: 1224000, tollsAndAccessCostUsd: 357000, delaySurchargesUsd: 127500 },
+];
+
+export const MOCK_CORRIDORS_ANALYTICS: RouteCorridorAnalytics[] = [
+  {
+    id: 'CORR-01',
+    corridorName: 'Southern Transcon Electrified Rail',
+    originCity: 'Los Angeles, CA',
+    destinationCity: 'Chicago, IL',
+    primaryMode: 'rail',
+    totalShipmentsVolume: 4280,
+    avgDistanceKm: 3360,
+    avgTransitHours: 48.5,
+    onTimeRatePercent: 96.4,
+    efficiencyScore: 94,
+    costPerTonKm: 0.048,
+  },
+  {
+    id: 'CORR-02',
+    corridorName: 'I-80 Midwest-Northeast Highway Trunk',
+    originCity: 'Chicago, IL',
+    destinationCity: 'Newark, NJ',
+    primaryMode: 'road',
+    totalShipmentsVolume: 5120,
+    avgDistanceKm: 1390,
+    avgTransitHours: 15.2,
+    onTimeRatePercent: 88.6,
+    efficiencyScore: 82,
+    costPerTonKm: 0.089,
+  },
+  {
+    id: 'CORR-03',
+    corridorName: 'Northern Intermodal Gateway',
+    originCity: 'Seattle, WA',
+    destinationCity: 'Chicago, IL',
+    primaryMode: 'rail',
+    totalShipmentsVolume: 3410,
+    avgDistanceKm: 3310,
+    avgTransitHours: 46.0,
+    onTimeRatePercent: 95.1,
+    efficiencyScore: 92,
+    costPerTonKm: 0.052,
+  },
+  {
+    id: 'CORR-04',
+    corridorName: 'Texas-Southeast Sunbelt Connector',
+    originCity: 'Fort Worth, TX',
+    destinationCity: 'Atlanta, GA',
+    primaryMode: 'road',
+    totalShipmentsVolume: 3890,
+    avgDistanceKm: 1280,
+    avgTransitHours: 13.8,
+    onTimeRatePercent: 92.4,
+    efficiencyScore: 89,
+    costPerTonKm: 0.084,
+  },
+  {
+    id: 'CORR-05',
+    corridorName: 'Transcontinental Air Express Arc',
+    originCity: 'Los Angeles, CA',
+    destinationCity: 'Chicago, IL',
+    primaryMode: 'air',
+    totalShipmentsVolume: 890,
+    avgDistanceKm: 2820,
+    avgTransitHours: 6.5,
+    onTimeRatePercent: 98.2,
+    efficiencyScore: 97,
+    costPerTonKm: 0.312,
+  },
+  {
+    id: 'CORR-06',
+    corridorName: 'Mid-Atlantic Coastal Feeder Bypasses',
+    originCity: 'Savannah, GA',
+    destinationCity: 'Newark, NJ',
+    primaryMode: 'water',
+    totalShipmentsVolume: 1240,
+    avgDistanceKm: 1150,
+    avgTransitHours: 32.0,
+    onTimeRatePercent: 94.0,
+    efficiencyScore: 91,
+    costPerTonKm: 0.038,
+  },
+];
+
+export const MOCK_DELAY_CAUSES: DelayRootCauseRecord[] = [
+  {
+    cause: 'Highway Urban Congestion & Chokepoints',
+    delayHours: 3420,
+    incidentCount: 542,
+    pctShare: 42,
+    primaryAffectedMode: 'Road Trucking',
+  },
+  {
+    cause: 'Severe Weather / Mountain Pass Closures',
+    delayHours: 2180,
+    incidentCount: 198,
+    pctShare: 27,
+    primaryAffectedMode: 'Road & Rail',
+  },
+  {
+    cause: 'Intermodal Terminal Gate Queue Backlog',
+    delayHours: 1450,
+    incidentCount: 312,
+    pctShare: 18,
+    primaryAffectedMode: 'Rail Intermodal',
+  },
+  {
+    cause: 'Customs & Port Regulatory Inspections',
+    delayHours: 680,
+    incidentCount: 84,
+    pctShare: 8,
+    primaryAffectedMode: 'Maritime / Port',
+  },
+  {
+    cause: 'Fleet Mechanical Breakdown & Maintenance',
+    delayHours: 410,
+    incidentCount: 46,
+    pctShare: 5,
+    primaryAffectedMode: 'Road & Yard Fleet',
+  },
+];
+
+export const MOCK_SUSTAINABILITY_DATA: SustainabilityMetrics = {
+  totalEstimatedEmissionsKg: 14850000,
+  avgEmissionPerTonKmGrams: 42.6,
+  emissionsSavedByModalShiftKg: 8920000,
+  modeBreakdown: {
+    roadKg: 9850000, // 66.3%
+    railKg: 3120000, // 21.0%
+    airKg: 1640000,  // 11.0%
+    waterKg: 240000, // 1.6%
+  },
+  monthlyEmissionTrend: [
+    { month: 'Jan', actualEmissionsKg: 1320000, targetBaselineKg: 1450000 },
+    { month: 'Feb', actualEmissionsKg: 1280000, targetBaselineKg: 1420000 },
+    { month: 'Mar', actualEmissionsKg: 1350000, targetBaselineKg: 1490000 },
+    { month: 'Apr', actualEmissionsKg: 1310000, targetBaselineKg: 1460000 },
+    { month: 'May', actualEmissionsKg: 1290000, targetBaselineKg: 1440000 },
+    { month: 'Jun', actualEmissionsKg: 1240000, targetBaselineKg: 1410000 },
+    { month: 'Jul', actualEmissionsKg: 1210000, targetBaselineKg: 1390000 },
+    { month: 'Aug', actualEmissionsKg: 1190000, targetBaselineKg: 1370000 },
+    { month: 'Sep', actualEmissionsKg: 1160000, targetBaselineKg: 1350000 },
+    { month: 'Oct', actualEmissionsKg: 1120000, targetBaselineKg: 1320000 },
+    { month: 'Nov', actualEmissionsKg: 1090000, targetBaselineKg: 1300000 },
+    { month: 'Dec', actualEmissionsKg: 1050000, targetBaselineKg: 1280000 },
+  ],
+};
+
+export const MOCK_REPORT_CATALOG: ReportItem[] = [
+  {
+    id: 'REP-PERF-01',
+    title: 'Executive Freight Performance & Service-Level Report',
+    subtitle: 'Consolidated on-time delivery rates, transit variance, and volume by mode',
+    type: 'freight_performance',
+    generatedDate: '2026-11-20',
+    rowCount: 1240,
+    fileSizeEstimate: '380 KB',
+  },
+  {
+    id: 'REP-COST-02',
+    title: 'Transportation Spend & Multi-Modal Linehaul Cost Audit',
+    subtitle: 'Detailed fuel burn, driver linehaul, toll reconciliation, and delay surcharges',
+    type: 'transportation_cost',
+    generatedDate: '2026-11-21',
+    rowCount: 890,
+    fileSizeEstimate: '420 KB',
+  },
+  {
+    id: 'REP-ROUTE-03',
+    title: 'Corridor Route Efficiency & Bottleneck Diagnosis Ledger',
+    subtitle: 'Velocity-to-capacity indices, detour frequency, and transit chokepoints',
+    type: 'route_efficiency',
+    generatedDate: '2026-11-22',
+    rowCount: 540,
+    fileSizeEstimate: '260 KB',
+  },
+  {
+    id: 'REP-ESG-04',
+    title: 'ISO 14083 / GLEC Carbon Footprint & Decarbonization Dossier',
+    subtitle: 'Scope 1, 2, and 3 emissions accounting with modal shift savings verification',
+    type: 'sustainability',
+    generatedDate: '2026-11-23',
+    rowCount: 680,
+    fileSizeEstimate: '310 KB',
+  },
+];
